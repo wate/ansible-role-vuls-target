@@ -1,3 +1,4 @@
 # {{ ansible_managed }}
 {{ vuls_target_user }} ALL=(ALL) NOPASSWD: {{ vuls_target_sudo_nopassword_commands|join(', ') }}
-Defaults:vuls env_keep="http_proxy https_proxy HTTP_PROXY HTTPS_PROXY"
+Defaults:{{ vuls_target_user }} env_keep="http_proxy https_proxy HTTP_PROXY HTTPS_PROXY"
+Defaults:{{ vuls_target_user }} !requiretty

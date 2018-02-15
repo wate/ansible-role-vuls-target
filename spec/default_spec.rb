@@ -24,6 +24,8 @@ end
 describe file('/etc/sudoers.d/vuls') do
   it { should exist }
   it { should be_file }
+  it { should contain "Defaults:#{property['vuls_target_user']} env_keep=\"http_proxy https_proxy HTTP_PROXY HTTPS_PROXY\"" }
+  it { should contain "Defaults:#{property['vuls_target_user']} !requiretty" }
 end
 
 describe file('/etc/sudoers.d/vuls'), if: os[:family] == 'redhat' do

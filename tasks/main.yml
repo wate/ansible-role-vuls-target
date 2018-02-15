@@ -1,0 +1,16 @@
+---
+- name: load os variables
+  include_vars: "{{ ansible_os_family }}.yml"
+- name: include os task
+  include_tasks: "{{ ansible_os_family }}.yml"
+- name: add vuls ssh login user
+  user:
+    name: "{{ vuls_target_user }}"
+- name: set vuls ssh login user authorized key
+  authorized_key:
+    user: "{{ vuls_target_user }}"
+    key: "{{ vuls_target_authorized_key }}"
+- name: set vuls sudo setting
+  template:
+    src: vuls.j2
+    dest: /etc/sudoers.d/vuls

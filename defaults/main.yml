@@ -1,0 +1,3 @@
+---
+vuls_target_user: vuls
+vuls_target_authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

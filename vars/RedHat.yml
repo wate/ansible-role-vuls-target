@@ -1,0 +1,12 @@
+---
+vuls_target_sudo_nopassword_commands:
+  - "/usr/bin/yum --color=never repolist"
+  - "/usr/bin/yum --color=never --security updateinfo list updates"
+  - "/usr/bin/yum --color=never --security updateinfo updates"
+  - "/usr/bin/repoquery"
+  - "/usr/bin/yum --color=never changelog all *"
+
+vuls_target_required_paclages:
+  - sudo
+  - yum-utils
+  - yum-plugin-changelog

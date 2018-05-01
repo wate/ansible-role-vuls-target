@@ -23,6 +23,6 @@ vagrant:
   instances:
     - name: vuls-target
       ansible_groups:
-        - default
+        - molecule
 verifier:
   name: serverspec

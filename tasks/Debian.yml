@@ -1,6 +1,4 @@
 ---
 - name: install dependency packages
   apt:
-    name: "{{ item }}"
-  with_items: "{{ vuls_target_required_paclages }}"
-  when: ansible_distribution == 'Debian'
+    name: "{{ vuls_target_required_paclages }}"

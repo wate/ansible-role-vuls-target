@@ -13,19 +13,24 @@ describe file('/etc/sudoers.d/vuls') do
 end
 
 if os[:family] == 'debian'
-  %w[aptitude reboot-notifier].each do |pkg|
+  %w[debian-goodies aptitude reboot-notifier].each do |pkg|
     describe package(pkg) do
       it { should be_installed }
     end
   end
-
+  debian_sudo_nopassword_commands = [
+    '/usr/bin/apt-get update',
+    '/usr/bin/stat *',
+    '/usr/sbin/checkrestart'
+  ]
+  debian_sudo_nopassword_command = debian_sudo_nopassword_commands.join(', ')
   describe file('/etc/sudoers.d/vuls') do
-    it { should contain "#{property['vuls_target_user']} ALL=(ALL) NOPASSWD: /usr/bin/apt-get update" }
+    it { should contain "#{property['vuls_target_user']} ALL=(ALL) NOPASSWD: " + debian_sudo_nopassword_command }
   end
 end
 
 if os[:family] == 'redhat'
-  %w[yum-utils yum-plugin-changelog].each do |pkg|
+  %w[yum-plugin-ps yum-plugin-changelog].each do |pkg|
     describe package(pkg) do
       it { should be_installed }
     end
@@ -33,11 +38,10 @@ if os[:family] == 'redhat'
 
   describe file('/etc/sudoers.d/vuls') do
     rhel_sudo_nopassword_commands = [
-      '/usr/bin/yum --color=never repolist',
-      '/usr/bin/yum --color=never --security updateinfo list updates',
-      '/usr/bin/yum --color=never --security updateinfo updates',
-      '/usr/bin/repoquery',
-      '/usr/bin/yum --color=never changelog all *'
+      '/usr/bin/yum -q ps all --color=never',
+      '/usr/bin/stat',
+      '/usr/bin/needs-restarting',
+      '/usr/bin/which'
     ]
     rhel_sudo_nopassword_command = rhel_sudo_nopassword_commands.join(', ')
     it { should contain "#{property['vuls_target_user']} ALL=(ALL) NOPASSWD: " + rhel_sudo_nopassword_command }

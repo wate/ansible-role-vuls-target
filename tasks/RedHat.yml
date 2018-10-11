@@ -1,5 +1,4 @@
 ---
 - name: install dependency packages
   yum:
-    name: "{{ item }}"
-  with_items: "{{ vuls_target_required_paclages }}"
+    name: "{{ vuls_target_required_paclages }}"

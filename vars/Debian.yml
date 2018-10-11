@@ -1,8 +1,11 @@
 ---
 vuls_target_sudo_nopassword_commands:
   - "/usr/bin/apt-get update"
+  - "/usr/bin/stat *"
+  - "/usr/sbin/checkrestart"
 
 vuls_target_required_paclages:
   - sudo
   - aptitude
+  - debian-goodies
   - reboot-notifier
